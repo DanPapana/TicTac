@@ -67,7 +67,6 @@ class TicTacToe {
             }
             GamePanel.add(TicTacButton[i]);
         }
-
         SuperMainPanel.add(GamePanel, BorderLayout.WEST);
         SuperMainPanel.add(MenuPanel, BorderLayout.EAST);
     }
@@ -92,12 +91,10 @@ class TicTacToe {
         if (checkDiagonals(position) == -1 || checkVerticals(position) == -1 || checkHorizontals(position) == -1) {
             return -1;
         }
-
         return 0;
     }
 
     private int checkDiagonals(int[] position) {
-
         //checks diagonally
         if (position[0] + position[4] + position[8] == 3 || position[2] + position[4] + position[6] == 3) {
             return 1;
@@ -108,7 +105,6 @@ class TicTacToe {
     }
 
     private int checkVerticals(int[] position) {
-
         //checks vertically
         for (int i = 0; i < 3; i++) {
             if (position[i * 3] + position[i * 3 + 1] + position[i * 3 + 2] == 3) {
@@ -122,7 +118,6 @@ class TicTacToe {
     }
 
     private int checkHorizontals(int[] position) {
-
         //checks horizontally
         for (int i = 0; i < 3; i++) {
             if (position[i] + position[i + 3] + position[i + 6] == 3) {
@@ -172,26 +167,19 @@ class TicTacToe {
         int bestValue = -1000;
 
         for (int i = 0; i < 9; i++) {
-
             if (this_position[i] == 0) {
-
                 this_position[i] = current_player;
-
                 int value = -miniMax(this_position, depth - 1, -current_player, -alpha, -beta);
-
                 this_position[i] = 0;
-
                 if (value > bestValue) {
                     bestValue = value;
                     best_move = i;
-
                     if (bestValue > alpha) {
                         alpha = bestValue;
                         if (alpha >= beta) {
                             return bestValue;
                         }
                     }
-
                 }
             }
         }
@@ -199,40 +187,30 @@ class TicTacToe {
         if (best_move == -1) {
             return 0;
         }
-
         return bestValue;
     }
 
     class buttonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event) {
-
             if (player == 1) {
-
                 for (int i = 0; i < 9; i++) {
-
                     if (event.getSource() == TicTacButton[i] && position[i] == 0) {
-
                         message_area.setBackground(new Color(0xC2F9C4));
                         TicTacButton[i].setIcon(XIcon);
                         position[i] = 1;
                         player = -1;
-
                         if (checkWin(position) == 1) {
                             message_area.setText("\n       🥇 ❌  HUMAN WON ❌ 🥇\n");
                             player = 0;
                         }
                     }
                 }
-
                 if (player == -1) {
-
                     miniMax(position, Integer.parseInt(difficulty_field.getText()), player, -1000, 1000);
-
                     TicTacButton[best_move].setIcon(OIcon);
                     position[best_move] = -1;
                     player = 1;
-
                     if (checkWin(position) == -1) {
                         message_area.setText("\n       🥇 🏐 COMPUTER WON 🏐 🥇\n");
                         player = 0;
